@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  api:
+    image: zhunter92/fcc-python-api-development
+    depends_on:
+      - postgres
+    ports:
+      - 80:8000
+    environment:
+      - DB_HOSTNAME=${DB_HOSTNAME}
+      - DB_PORT=${DB_PORT}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALGORITHM=${ALGORITHM}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
+    volumes:
+      - ./:/usr/src/app:ro
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+    - fcc-postgres-db:/var/lib/postgresql/data
+volumes:
+  fcc-postgres-db:
